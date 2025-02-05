@@ -6,14 +6,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 
 @Controller
 public class MovieController {
-    private MovieService movieService;
+    private final MovieService movieService;
 
     @Autowired
     public MovieController(MovieService movieService) {
         this.movieService = movieService;
+    }
+
+    @GetMapping("/movie")
+    public ResponseEntity<List<Movie>> findAllMovies() {
+        List<Movie> allMovies = movieService.findAllMovies();
+
+        return ResponseEntity.ok(allMovies);
     }
 
     @GetMapping("/movie/{id}")

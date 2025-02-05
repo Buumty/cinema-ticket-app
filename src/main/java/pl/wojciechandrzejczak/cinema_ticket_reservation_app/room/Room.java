@@ -1,9 +1,9 @@
 package pl.wojciechandrzejczak.cinema_ticket_reservation_app.room;
 
-import jakarta.persistence.*;
-import pl.wojciechandrzejczak.cinema_ticket_reservation_app.movie.Movie;
-
-import java.util.List;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 @Entity
 public class Room {
@@ -11,18 +11,22 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Integer seatsNumber;
-    private Integer freeSeatsNumber;
-    private Integer takenSeatsNumber;
+
+    private String name;
+
     public Room(){}
 
-    public Room(Integer seatsNumber, Integer freeSeatsNumber, Integer takenSeatsNumber) {
+    public Room(Integer seatsNumber, String name) {
         this.seatsNumber = seatsNumber;
-        this.freeSeatsNumber = freeSeatsNumber;
-        this.takenSeatsNumber = takenSeatsNumber;
+        this.name = name;
     }
 
     public Integer getId() {
         return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Integer getSeatsNumber() {
@@ -33,29 +37,20 @@ public class Room {
         this.seatsNumber = seatsNumber;
     }
 
-    public Integer getFreeSeatsNumber() {
-        return freeSeatsNumber;
+    public String getName() {
+        return name;
     }
 
-    public void setFreeSeatsNumber(Integer freeSeatsNumber) {
-        this.freeSeatsNumber = freeSeatsNumber;
-    }
-
-    public Integer getTakenSeatsNumber() {
-        return takenSeatsNumber;
-    }
-
-    public void setTakenSeatsNumber(Integer takenSeatsNumber) {
-        this.takenSeatsNumber = takenSeatsNumber;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
     public String toString() {
         return "Room{" +
                 "id=" + id +
-                ", seatingsNumber=" + seatsNumber +
-                ", freeSeatingsNumber=" + freeSeatsNumber +
-                ", takenSeatingsNumber=" + takenSeatsNumber +
+                ", seatsNumber=" + seatsNumber +
+                ", name='" + name + '\'' +
                 '}';
     }
 }

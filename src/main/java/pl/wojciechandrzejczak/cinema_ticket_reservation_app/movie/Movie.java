@@ -10,15 +10,14 @@ public class Movie {
     private String name;
     @Column(nullable = false)
     private Integer length;
-    private String startTime;
+
     private String description;
 
     public Movie(){}
 
-    public Movie(String name, Integer length, String startTime, String description) {
+    public Movie(String name, Integer length, String description) {
         this.name = name;
         this.length = length;
-        this.startTime = startTime;
         this.description = description;
     }
 
@@ -46,14 +45,6 @@ public class Movie {
         this.length = lengthInMinutes;
     }
 
-    public String getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -68,7 +59,6 @@ public class Movie {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", length=" + length +
-                ", startTime=" + startTime +
                 ", description='" + description + '\'' +
                 '}';
     }

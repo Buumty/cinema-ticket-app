@@ -5,15 +5,21 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class MovieService {
 
-    private MovieRepository movieRepository;
+    private final MovieRepository movieRepository;
 
     @Autowired
     public MovieService(MovieRepository movieRepository) {
         this.movieRepository = movieRepository;
+    }
+
+    public List<Movie> findAllMovies() {
+        return movieRepository.findAll();
     }
 
     public Movie findMovieById(Integer id) {
@@ -32,9 +38,6 @@ public class MovieService {
         }
         if (movie.getLength() != null) {
             dbMovie.setLength(movie.getLength());
-        }
-        if (movie.getStartTime() != null) {
-            dbMovie.setStartTime(movie.getStartTime());
         }
         if (movie.getDescription() != null) {
             dbMovie.setDescription(movie.getDescription());
