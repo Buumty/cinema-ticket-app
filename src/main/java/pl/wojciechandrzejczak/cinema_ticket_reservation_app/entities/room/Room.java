@@ -45,12 +45,21 @@ public class Room {
         this.name = name;
     }
 
+    public Seance getSeance() {
+        return seance;
+    }
+
+    public void setSeance(Seance seance) {
+        this.seance = seance;
+    }
+
     @Override
     public String toString() {
         return "Room{" +
                 "id=" + id +
                 ", seatsNumber=" + seatsNumber +
                 ", name='" + name + '\'' +
+                ", seance=" + seance +
                 '}';
     }
 }

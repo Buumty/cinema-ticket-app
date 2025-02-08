@@ -22,7 +22,7 @@ public class MovieService {
         return movieRepository.findAll();
     }
 
-    public Movie findMovieById(java.lang.Integer id) {
+    public Movie findMovieById(Integer id) {
         return movieRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
@@ -42,11 +42,15 @@ public class MovieService {
         if (movie.getDescription() != null) {
             dbMovie.setDescription(movie.getDescription());
         }
+        if (movie.getSeance() != null) {
+            dbMovie.setSeance(movie.getSeance());
+        }
 
         return movieRepository.save(dbMovie);
     }
 
-    public void deleteMovieById(java.lang.Integer id) {
+    public void deleteMovieById(Integer id) {
+        if (movieRepository.findById(id).isEmpty()) throw new EntityNotFoundException();
         movieRepository.deleteById(id);
     }
 }

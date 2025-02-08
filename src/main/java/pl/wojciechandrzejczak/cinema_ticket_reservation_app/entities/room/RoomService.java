@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 @Transactional
 public class RoomService {
-    private RoomRepository roomRepository;
+    private final RoomRepository roomRepository;
 
     @Autowired
     public RoomService(RoomRepository roomRepository) {
@@ -29,17 +29,26 @@ public class RoomService {
         return roomRepository.save(room);
     }
 
-    public Room updateRoom(Room room, java.lang.Integer id) {
+    public Room updateRoom(Room room,Integer id) {
         Room dbRoom = roomRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+
+        if (room.getName() != null) {
+            dbRoom.setName(room.getName());
+        }
 
         if (room.getSeatsNumber() != null) {
             dbRoom.setSeatsNumber(room.getSeatsNumber());
         }
 
+        if (room.getSeance() != null) {
+            dbRoom.setSeance(room.getSeance());
+        }
+
         return roomRepository.save(dbRoom);
     }
 
-    public void deleteRoomById(java.lang.Integer id) {
+    public void deleteRoomById(Integer id) {
+        if (roomRepository.findById(id).isEmpty()) throw new EntityNotFoundException();
         roomRepository.deleteById(id);
     }
 }

@@ -43,6 +43,7 @@ public class TicketService {
     }
 
     public void deleteTicketById(Integer id) {
+        if (ticketRepository.findById(id).isEmpty()) throw new EntityNotFoundException();
         ticketRepository.deleteById(id);
     }
 }
