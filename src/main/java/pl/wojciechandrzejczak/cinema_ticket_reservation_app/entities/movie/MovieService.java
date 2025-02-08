@@ -1,4 +1,4 @@
-package pl.wojciechandrzejczak.cinema_ticket_reservation_app.movie;
+package pl.wojciechandrzejczak.cinema_ticket_reservation_app.entities.movie;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -22,7 +22,7 @@ public class MovieService {
         return movieRepository.findAll();
     }
 
-    public Movie findMovieById(Integer id) {
+    public Movie findMovieById(java.lang.Integer id) {
         return movieRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
@@ -30,7 +30,7 @@ public class MovieService {
         return movieRepository.save(movie);
     }
 
-    public Movie updateMovie(Movie movie, Integer id) {
+    public Movie updateMovie(Movie movie, java.lang.Integer id) {
         Movie dbMovie = movieRepository.findById(id).orElseThrow(EntityNotFoundException::new);
 
         if (movie.getName() != null) {
@@ -46,7 +46,7 @@ public class MovieService {
         return movieRepository.save(dbMovie);
     }
 
-    public void deleteMovieById(Integer id) {
+    public void deleteMovieById(java.lang.Integer id) {
         movieRepository.deleteById(id);
     }
 }

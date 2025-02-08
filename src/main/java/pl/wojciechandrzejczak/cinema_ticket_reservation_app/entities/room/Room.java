@@ -1,9 +1,7 @@
-package pl.wojciechandrzejczak.cinema_ticket_reservation_app.room;
+package pl.wojciechandrzejczak.cinema_ticket_reservation_app.entities.room;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import pl.wojciechandrzejczak.cinema_ticket_reservation_app.entities.seance.Seance;
 
 @Entity
 public class Room {
@@ -13,6 +11,8 @@ public class Room {
     private Integer seatsNumber;
 
     private String name;
+    @OneToOne(mappedBy = "room", cascade = CascadeType.ALL)
+    private Seance seance;
 
     public Room(){}
 

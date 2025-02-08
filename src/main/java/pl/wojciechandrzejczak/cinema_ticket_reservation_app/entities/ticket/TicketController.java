@@ -1,10 +1,11 @@
-package pl.wojciechandrzejczak.cinema_ticket_reservation_app.ticket;
+package pl.wojciechandrzejczak.cinema_ticket_reservation_app.entities.ticket;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 
 @Controller
@@ -34,7 +35,9 @@ public class TicketController {
     public ResponseEntity<Ticket> createTicket(@RequestBody Ticket ticket) {
         Ticket createdTicket = ticketService.createTicket(ticket);
 
-        return ResponseEntity.ok(createdTicket);
+        URI location = URI.create("/ticket" + createdTicket.getId());
+
+        return ResponseEntity.created(location).body(createdTicket);
     }
 
     @PutMapping("/ticket/{id}")

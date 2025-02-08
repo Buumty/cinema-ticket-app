@@ -1,4 +1,4 @@
-package pl.wojciechandrzejczak.cinema_ticket_reservation_app.ticket;
+package pl.wojciechandrzejczak.cinema_ticket_reservation_app.entities.ticket;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;

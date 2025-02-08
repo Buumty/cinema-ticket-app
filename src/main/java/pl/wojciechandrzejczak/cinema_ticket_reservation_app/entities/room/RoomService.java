@@ -1,4 +1,4 @@
-package pl.wojciechandrzejczak.cinema_ticket_reservation_app.room;
+package pl.wojciechandrzejczak.cinema_ticket_reservation_app.entities.room;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -21,7 +21,7 @@ public class RoomService {
         return roomRepository.findAll();
     }
 
-    public Room findRoomById(Integer id) {
+    public Room findRoomById(java.lang.Integer id) {
         return roomRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
@@ -29,7 +29,7 @@ public class RoomService {
         return roomRepository.save(room);
     }
 
-    public Room updateRoom(Room room, Integer id) {
+    public Room updateRoom(Room room, java.lang.Integer id) {
         Room dbRoom = roomRepository.findById(id).orElseThrow(EntityNotFoundException::new);
 
         if (room.getSeatsNumber() != null) {
@@ -39,7 +39,7 @@ public class RoomService {
         return roomRepository.save(dbRoom);
     }
 
-    public void deleteRoomById(Integer id) {
+    public void deleteRoomById(java.lang.Integer id) {
         roomRepository.deleteById(id);
     }
 }

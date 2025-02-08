@@ -1,31 +1,34 @@
-package pl.wojciechandrzejczak.cinema_ticket_reservation_app.movie;
+package pl.wojciechandrzejczak.cinema_ticket_reservation_app.entities.movie;
 
 import jakarta.persistence.*;
+import pl.wojciechandrzejczak.cinema_ticket_reservation_app.entities.seance.Seance;
 
 @Entity
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private java.lang.Integer id;
     private String name;
     @Column(nullable = false)
-    private Integer length;
+    private java.lang.Integer length;
 
     private String description;
+    @OneToOne(mappedBy = "movie", cascade = CascadeType.ALL)
+    private Seance seance;
 
     public Movie(){}
 
-    public Movie(String name, Integer length, String description) {
+    public Movie(String name, java.lang.Integer length, String description) {
         this.name = name;
         this.length = length;
         this.description = description;
     }
 
-    public Integer getId() {
+    public java.lang.Integer getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(java.lang.Integer id) {
         this.id = id;
     }
 
@@ -37,11 +40,11 @@ public class Movie {
         this.name = name;
     }
 
-    public Integer getLength() {
+    public java.lang.Integer getLength() {
         return length;
     }
 
-    public void setLength(Integer lengthInMinutes) {
+    public void setLength(java.lang.Integer lengthInMinutes) {
         this.length = lengthInMinutes;
     }
 
@@ -51,6 +54,14 @@ public class Movie {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Seance getSeance() {
+        return seance;
+    }
+
+    public void setSeance(Seance seance) {
+        this.seance = seance;
     }
 
     @Override

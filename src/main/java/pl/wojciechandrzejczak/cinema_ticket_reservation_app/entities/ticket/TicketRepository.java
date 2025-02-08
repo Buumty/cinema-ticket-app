@@ -1,4 +1,4 @@
-package pl.wojciechandrzejczak.cinema_ticket_reservation_app.ticket;
+package pl.wojciechandrzejczak.cinema_ticket_reservation_app.entities.ticket;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

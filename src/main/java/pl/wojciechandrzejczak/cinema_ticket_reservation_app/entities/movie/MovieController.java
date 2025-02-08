@@ -1,4 +1,4 @@
-package pl.wojciechandrzejczak.cinema_ticket_reservation_app.movie;
+package pl.wojciechandrzejczak.cinema_ticket_reservation_app.entities.movie;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +25,7 @@ public class MovieController {
     }
 
     @GetMapping("/movie/{id}")
-    public ResponseEntity<Movie> findMovieById(@PathVariable Integer id) {
+    public ResponseEntity<Movie> findMovieById(@PathVariable java.lang.Integer id) {
         Movie movieById = movieService.findMovieById(id);
 
         return ResponseEntity.ok(movieById);
@@ -41,21 +41,21 @@ public class MovieController {
     }
 
     @PutMapping("/movie/{id}")
-    public ResponseEntity<Movie> updateMovie(@RequestBody Movie movie, @PathVariable Integer id) {
+    public ResponseEntity<Movie> updateMovie(@RequestBody Movie movie, @PathVariable java.lang.Integer id) {
         Movie updatedMovie = movieService.updateMovie(movie, id);
 
         return ResponseEntity.ok(updatedMovie);
     }
 
     @PatchMapping("/movie/{id}")
-    public ResponseEntity<Movie> partiallyUpdateMovie(@RequestBody Movie movie, @PathVariable Integer id) {
+    public ResponseEntity<Movie> partiallyUpdateMovie(@RequestBody Movie movie, @PathVariable java.lang.Integer id) {
         Movie partiallyUpdatedMovie = movieService.updateMovie(movie, id);
 
         return ResponseEntity.ok(partiallyUpdatedMovie);
     }
 
     @DeleteMapping("movie/{id}")
-    public ResponseEntity<Void> deleteMovieById(@PathVariable Integer id) {
+    public ResponseEntity<Void> deleteMovieById(@PathVariable java.lang.Integer id) {
         movieService.deleteMovieById(id);
 
         return ResponseEntity.noContent().build();
