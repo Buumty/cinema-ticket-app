@@ -52,6 +52,7 @@ public class SeanceService {
     }
 
     public void deleteSeanceById(Integer id) {
+        if (seanceRepository.findById(id).isEmpty()) throw new EntityNotFoundException();
         seanceRepository.deleteById(id);
     }
 
