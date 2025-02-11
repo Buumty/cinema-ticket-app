@@ -11,8 +11,6 @@ public class Room {
     private Integer seatsNumber;
 
     private String name;
-    @OneToOne(mappedBy = "room", cascade = CascadeType.ALL)
-    private Seance seance;
 
     public Room(){}
 
@@ -45,13 +43,6 @@ public class Room {
         this.name = name;
     }
 
-    public Seance getSeance() {
-        return seance;
-    }
-
-    public void setSeance(Seance seance) {
-        this.seance = seance;
-    }
 
     @Override
     public String toString() {
@@ -59,7 +50,6 @@ public class Room {
                 "id=" + id +
                 ", seatsNumber=" + seatsNumber +
                 ", name='" + name + '\'' +
-                ", seance=" + seance +
                 '}';
     }
 }

@@ -10,12 +10,8 @@ public class Movie {
     private java.lang.Integer id;
     private String name;
     @Column(nullable = false)
-    private java.lang.Integer length;
-
+    private Integer length;
     private String description;
-    @OneToOne(mappedBy = "movie", cascade = CascadeType.ALL)
-    private Seance seance;
-
     public Movie(){}
 
     public Movie(String name, java.lang.Integer length, String description) {
@@ -54,14 +50,6 @@ public class Movie {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Seance getSeance() {
-        return seance;
-    }
-
-    public void setSeance(Seance seance) {
-        this.seance = seance;
     }
 
     @Override

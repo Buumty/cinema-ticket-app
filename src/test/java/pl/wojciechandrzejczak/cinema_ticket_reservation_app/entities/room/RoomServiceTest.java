@@ -7,8 +7,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import pl.wojciechandrzejczak.cinema_ticket_reservation_app.entities.movie.Movie;
-import pl.wojciechandrzejczak.cinema_ticket_reservation_app.entities.seance.Seance;
 
 import java.util.List;
 import java.util.Optional;
@@ -96,13 +94,11 @@ public class RoomServiceTest {
         room.setId(1);
         room.setName("Sapphire");
         room.setSeatsNumber(100);
-        room.setSeance(new Seance());
 
         Mockito.when(roomRepository.save(room)).thenReturn(room);
         Room createdRoom = roomService.createRoom(room);
 
         assertNotNull(createdRoom);
-        assertNotNull(createdRoom.getSeance());
         assertEquals(1, createdRoom.getId(), "The ID of room should be 1 but is not!");
         assertEquals("Sapphire", createdRoom.getName(), "The room name should be 'Sapphire' but is not!");
         assertEquals(100, createdRoom.getSeatsNumber(), "The room seats number should be 100 but is not!");
@@ -119,14 +115,12 @@ public class RoomServiceTest {
         Room newRoom = new Room();
         newRoom.setName("Sapphire");
         newRoom.setSeatsNumber(100);
-        newRoom.setSeance(new Seance());
 
         when(roomRepository.findById(1)).thenReturn(Optional.of(existingRoom));
         when(roomRepository.save(existingRoom)).thenReturn(existingRoom);
         Room updatedRoom = roomService.updateRoom(newRoom, 1);
 
         assertNotNull(updatedRoom);
-        assertNotNull(updatedRoom.getSeance());
         assertEquals(1, updatedRoom.getId(), "The ID of updated room should be 1 but is not!");
         assertEquals("Sapphire", updatedRoom.getName(), "The room name should be 'Sapphire' but is not!");
         assertEquals(100, updatedRoom.getSeatsNumber(), "The room seats number should be 100 but is not!");

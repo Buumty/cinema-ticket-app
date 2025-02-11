@@ -42,9 +42,6 @@ public class MovieService {
         if (movie.getDescription() != null) {
             dbMovie.setDescription(movie.getDescription());
         }
-        if (movie.getSeance() != null) {
-            dbMovie.setSeance(movie.getSeance());
-        }
 
         return movieRepository.save(dbMovie);
     }

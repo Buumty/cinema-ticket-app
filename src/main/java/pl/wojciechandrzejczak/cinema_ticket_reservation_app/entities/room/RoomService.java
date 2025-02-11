@@ -40,10 +40,6 @@ public class RoomService {
             dbRoom.setSeatsNumber(room.getSeatsNumber());
         }
 
-        if (room.getSeance() != null) {
-            dbRoom.setSeance(room.getSeance());
-        }
-
         return roomRepository.save(dbRoom);
     }
 

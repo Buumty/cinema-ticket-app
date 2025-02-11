@@ -7,7 +7,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import pl.wojciechandrzejczak.cinema_ticket_reservation_app.entities.seance.Seance;
 
 import java.util.List;
 import java.util.Optional;
@@ -65,13 +64,11 @@ public class MovieServiceTest {
         movie.setName("Indiana Jones");
         movie.setDescription("Adventure");
         movie.setLength(120);
-        movie.setSeance(new Seance());
 
         when(movieRepository.findById(1)).thenReturn(Optional.of(movie));
         Movie movieById = movieService.findMovieById(1);
 
         assertNotNull(movieById);
-        assertNotNull(movieById.getSeance());
         assertEquals(1, movieById.getId(), "The movie ID should be 1 but is not!");
         assertEquals("Indiana Jones", movieById.getName(), "The movie name should be 'Indiana Jones' but is not!");
         assertEquals("Adventure", movieById.getDescription(), "The movie description should be 'Adventure' but is not!");
@@ -97,13 +94,11 @@ public class MovieServiceTest {
         movie.setName("Indiana Jones");
         movie.setDescription("Adventure");
         movie.setLength(120);
-        movie.setSeance(new Seance());
 
         when(movieRepository.save(movie)).thenReturn(movie);
         Movie createdMovie = movieService.createMovie(movie);
 
         assertNotNull(createdMovie);
-        assertNotNull(createdMovie.getSeance());
         assertEquals(1, createdMovie.getId(), "The movie ID should be 1 but is not!");
         assertEquals("Indiana Jones", createdMovie.getName(), "The movie name should be 'Indiana Jones' but is not!");
         assertEquals("Adventure", createdMovie.getDescription(), "The movie description should be 'Adventure' but is not!");
@@ -118,13 +113,11 @@ public class MovieServiceTest {
         movie.setName("Indiana Jones");
         movie.setDescription("Adventure");
         movie.setLength(120);
-        movie.setSeance(null);
 
         Movie newMovie = new Movie();
         newMovie.setName("LOTR");
         newMovie.setDescription("Fantasy");
         newMovie.setLength(180);
-        newMovie.setSeance(new Seance());
 
         when(movieRepository.findById(1)).thenReturn(Optional.of(movie));
         when(movieRepository.save(movie)).thenReturn(movie);
@@ -132,7 +125,6 @@ public class MovieServiceTest {
         Movie updatedMovie = movieService.updateMovie(newMovie, 1);
 
         assertNotNull(updatedMovie);
-        assertNotNull(updatedMovie.getSeance());
         assertEquals(1, updatedMovie.getId(), "The movie ID should be 1 but is not!");
         assertEquals("LOTR", updatedMovie.getName(), "The movie name should be 'LOTR' but is not!");
         assertEquals("Fantasy", updatedMovie.getDescription(), "The movie description should be 'Fantasy' but is not!");
@@ -149,7 +141,6 @@ public class MovieServiceTest {
         movie.setName("Indiana Jones");
         movie.setDescription("Adventure");
         movie.setLength(120);
-        movie.setSeance(new Seance());
 
         when(movieRepository.findById(movieId)).thenReturn(Optional.of(movie));
         movieService.deleteMovieById(movieId);
