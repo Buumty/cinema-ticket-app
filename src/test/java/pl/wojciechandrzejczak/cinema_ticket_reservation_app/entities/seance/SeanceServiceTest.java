@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import pl.wojciechandrzejczak.cinema_ticket_reservation_app.entities.movie.Movie;
 import pl.wojciechandrzejczak.cinema_ticket_reservation_app.entities.room.Room;
+import pl.wojciechandrzejczak.cinema_ticket_reservation_app.entities.room.RoomService;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -21,11 +22,12 @@ import static org.mockito.Mockito.*;
 public class SeanceServiceTest {
     @Mock
     private SeanceRepository seanceRepository;
+    private RoomService roomService;
     private SeanceService seanceService;
 
     @BeforeEach
     public void setUp() {
-        this.seanceService = new SeanceService(seanceRepository);
+        this.seanceService = new SeanceService(seanceRepository,roomService);
     }
 
     @Test
@@ -64,8 +66,8 @@ public class SeanceServiceTest {
         Seance seanceById = seanceService.findSeanceById(correctId);
 
         assertNotNull(seanceById);
-        assertNotNull(seanceById.getMovie());
         assertNotNull(seanceById.getRoom());
+        assertNotNull(seanceById.getMovie());
         assertEquals(1,seanceById.getId(),"The seance id should be 1 but is not!");
         assertEquals(100, seanceById.getTicketsAvailable(), "The seance tickets available should be 100 but is not!");
         assertEquals(LocalDateTime.of(2023,8,12,14,30,45), seanceById.getStartTime());
@@ -85,13 +87,7 @@ public class SeanceServiceTest {
 
     @Test
     public void givenSeance_whenFindSeanceById_thenReturnCorrectSeance() {
-        Seance seance = new Seance();
-        seance.setRoom(new Room());
-        seance.setMovie(new Movie());
-        seance.setTicketsAvailable(100);
-        seance.setId(1);
-        seance.setStartTime(LocalDateTime.of(2023,8,12,14,30,45));
-        seance.setEndTime(LocalDateTime.of(2024,11,6,8,15,23));
+        Seance seance = getSeance();
 
         when(seanceRepository.save(seance)).thenReturn(seance);
         Seance createdSeance = seanceService.createSeance(seance);
@@ -118,8 +114,8 @@ public class SeanceServiceTest {
 
         Seance newSeance = new Seance();
         newSeance.setTicketsAvailable(200);
-        newSeance.setRoom(new Room());
-        newSeance.setMovie(new Movie());
+        seance.setRoom(new Room());
+        seance.setMovie(new Movie());
         newSeance.setStartTime(LocalDateTime.of(2025,4,12,3,15,45));
         newSeance.setEndTime(LocalDateTime.of(2023,2,1,3,12,14));
 
@@ -166,30 +162,37 @@ public class SeanceServiceTest {
 
     @Test
     public void givenSeance_whenSeanceDTOMapper_thenReturnSeanceDTO() {
-        Movie movie = new Movie();
-        movie.setId(1);
-
-        Room room = new Room();
-        room.setId(1);
-        room.setSeatsNumber(100);
-
-        Seance seance = new Seance();
-        seance.setId(1);
-        seance.setMovie(movie);
-        seance.setRoom(room);
-        seance.setTicketsAvailable(room.getSeatsNumber());
-        seance.setStartTime(LocalDateTime.of(2023,8,12,14,30,45));
-        seance.setEndTime(LocalDateTime.of(2024,11,6,8,15,23));
+        Seance seance = getSeance();
 
         SeanceDTO seanceDTO = seanceService.seanceDTOMapper(seance);
 
         assertNotNull(seanceDTO);
         assertInstanceOf(SeanceDTO.class, seanceDTO);
         assertEquals(1, seanceDTO.getId(),"The seanceDTO id should be 1 but is not");
-        assertEquals(1, seanceDTO.getMovieId(), "The seanceDTO movieId should be 1 but is not!");
-        assertEquals(1, seanceDTO.getRoomId(), "The seanceDTO roomId should be 1 but is not!");
+        assertEquals("movie", seanceDTO.getMovieName(), "The seanceDTO movieName should be 'movie' but is not!");
+        assertEquals("room", seanceDTO.getRoomName(), "The seanceDTO roomName should be 'room' but is not!");
         assertEquals(100, seanceDTO.getTicketsAvailable(), "The seanceDTO ticketsAvailable should be 100 but is not!");
         assertEquals(LocalDateTime.of(2023,8,12,14,30,45), seanceDTO.getStartTime());
         assertEquals(LocalDateTime.of(2024,11,6,8,15,23), seanceDTO.getEndTime());
+    }
+
+    private static Seance getSeance() {
+        Movie movie = new Movie();
+        movie.setName("movie");
+        movie.setId(1);
+
+        Room room = new Room();
+        room.setId(1);
+        room.setName("room");
+        room.setSeatsNumber(100);
+
+        Seance seance = new Seance();
+        seance.setId(1);
+        seance.setRoom(room);
+        seance.setMovie(movie);
+        seance.setTicketsAvailable(room.getSeatsNumber());
+        seance.setStartTime(LocalDateTime.of(2023,8,12,14,30,45));
+        seance.setEndTime(LocalDateTime.of(2024,11,6,8,15,23));
+        return seance;
     }
 }

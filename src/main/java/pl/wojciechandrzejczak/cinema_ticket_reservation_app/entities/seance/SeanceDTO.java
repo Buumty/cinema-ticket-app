@@ -4,17 +4,17 @@ import java.time.LocalDateTime;
 
 public class SeanceDTO {
     private Integer id;
-    private Integer movieId;
-    private Integer roomId;
+    private String movieName;
+    private String roomName;
     private Integer ticketsAvailable;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     public SeanceDTO() {}
 
-    public SeanceDTO(Integer id, Integer movieId, Integer roomId, Integer ticketsAvailable, LocalDateTime startTime, LocalDateTime endTime) {
+    public SeanceDTO(Integer id, String movieName, String roomName, Integer ticketsAvailable, LocalDateTime startTime, LocalDateTime endTime) {
         this.id = id;
-        this.movieId = movieId;
-        this.roomId = roomId;
+        this.movieName = movieName;
+        this.roomName = roomName;
         this.ticketsAvailable = ticketsAvailable;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -28,20 +28,20 @@ public class SeanceDTO {
         this.id = id;
     }
 
-    public Integer getMovieId() {
-        return movieId;
+    public String getMovieName() {
+        return movieName;
     }
 
-    public void setMovieId(Integer movieId) {
-        this.movieId = movieId;
+    public void setMovieName(String movieName) {
+        this.movieName = movieName;
     }
 
-    public Integer getRoomId() {
-        return roomId;
+    public String getRoomName() {
+        return roomName;
     }
 
-    public void setRoomId(Integer roomId) {
-        this.roomId = roomId;
+    public void setRoomName(String roomName) {
+        this.roomName = roomName;
     }
 
     public Integer getTicketsAvailable() {
@@ -72,8 +72,8 @@ public class SeanceDTO {
     public String toString() {
         return "SeanceDTO{" +
                 "id=" + id +
-                ", movie=" + movieId +
-                ", room=" + roomId +
+                ", movie=" + movieName +
+                ", room=" + roomName +
                 ", ticketsAvailable=" + ticketsAvailable +
                 ", startTime='" + startTime + '\'' +
                 ", endTime='" + endTime + '\'' +

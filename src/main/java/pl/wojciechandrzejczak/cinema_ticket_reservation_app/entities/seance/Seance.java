@@ -11,11 +11,11 @@ public class Seance {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-    @JoinColumn(name = "movie", referencedColumnName = "id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "movie")
     private Movie movie;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-    @JoinColumn(name = "room", referencedColumnName = "id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "room")
     private Room room;
     private Integer ticketsAvailable;
     private LocalDateTime startTime;
@@ -83,8 +83,8 @@ public class Seance {
     public String toString() {
         return "Seance{" +
                 "id=" + id +
-                ", movie=" + (movie != null ? movie.getId() : "null") +
-                ", room=" + (room != null ? room.getId() : "null") +
+                ", movie=" + movie +
+                ", room=" + room +
                 ", ticketsAvailable=" + ticketsAvailable +
                 ", startTime='" + startTime + '\'' +
                 ", endTime='" + endTime + '\'' +
