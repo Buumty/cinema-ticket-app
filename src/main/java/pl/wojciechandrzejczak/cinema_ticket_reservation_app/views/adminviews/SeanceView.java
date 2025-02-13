@@ -1,4 +1,4 @@
-package pl.wojciechandrzejczak.cinema_ticket_reservation_app.views;
+package pl.wojciechandrzejczak.cinema_ticket_reservation_app.views.adminviews;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;

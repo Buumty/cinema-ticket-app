@@ -3,10 +3,10 @@ package pl.wojciechandrzejczak.cinema_ticket_reservation_app.views.components;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.router.RouterLink;
-import pl.wojciechandrzejczak.cinema_ticket_reservation_app.views.MovieView;
-import pl.wojciechandrzejczak.cinema_ticket_reservation_app.views.RoomView;
-import pl.wojciechandrzejczak.cinema_ticket_reservation_app.views.SeanceView;
-import pl.wojciechandrzejczak.cinema_ticket_reservation_app.views.TicketView;
+import pl.wojciechandrzejczak.cinema_ticket_reservation_app.views.adminviews.MovieView;
+import pl.wojciechandrzejczak.cinema_ticket_reservation_app.views.adminviews.RoomView;
+import pl.wojciechandrzejczak.cinema_ticket_reservation_app.views.adminviews.SeanceView;
+import pl.wojciechandrzejczak.cinema_ticket_reservation_app.views.adminviews.TicketView;
 
 public class AdminHeader extends HorizontalLayout {
     public AdminHeader() {
