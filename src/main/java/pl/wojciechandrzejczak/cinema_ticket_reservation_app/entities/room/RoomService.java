@@ -21,7 +21,7 @@ public class RoomService {
         return roomRepository.findAll();
     }
 
-    public Room findRoomById(java.lang.Integer id) {
+    public Room findRoomById(Integer id) {
         return roomRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 

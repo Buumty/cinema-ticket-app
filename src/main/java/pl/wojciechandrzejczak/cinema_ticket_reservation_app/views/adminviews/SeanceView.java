@@ -64,8 +64,8 @@ public class SeanceView extends VerticalLayout {
         seanceGrid.setWidth("70%");
         seanceGrid.setHeightFull();
 
-        seanceGrid.addColumn(Seance::getMovie).setHeader("Movie");
-        seanceGrid.addColumn(Seance::getRoom).setHeader("Room");
+        seanceGrid.addColumn(seance -> (seance.getMovie().getName())).setHeader("Movie");
+        seanceGrid.addColumn(seance -> (seance.getRoom().getName())).setHeader("Room");
         seanceGrid.addColumn(Seance::getStartTime).setHeader("Start Time");
         seanceGrid.addColumn(Seance::getEndTime).setHeader("End Time");
         seanceGrid.addColumn(Seance::getTicketsAvailable).setHeader("Tickets Available");
@@ -97,7 +97,7 @@ public class SeanceView extends VerticalLayout {
             Movie movie = movieComboBox.getValue();
             Room room = roomComboBox.getValue();
             LocalDateTime startTime = startTimePicker.getValue();
-            seanceService.createSeance(new Seance(movie,room,room.getSeatsNumber(),startTime, (startTime.plusMinutes(movie.getLength()))));
+            seanceService.createSeance(new Seance(movie,room,room.getSeatsNumber(),startTime));
             seanceGrid.setItems(seanceService.findAllSeances());
         });
 

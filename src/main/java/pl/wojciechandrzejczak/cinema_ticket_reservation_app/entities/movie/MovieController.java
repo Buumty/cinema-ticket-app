@@ -2,13 +2,12 @@ package pl.wojciechandrzejczak.cinema_ticket_reservation_app.entities.movie;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
 
-@Controller
+@RestController
 public class MovieController {
     private final MovieService movieService;
 
@@ -17,7 +16,7 @@ public class MovieController {
         this.movieService = movieService;
     }
 
-    @GetMapping("/movie")
+    @GetMapping("/movies")
     public ResponseEntity<List<Movie>> findAllMovies() {
         List<Movie> allMovies = movieService.findAllMovies();
 
@@ -25,7 +24,7 @@ public class MovieController {
     }
 
     @GetMapping("/movie/{id}")
-    public ResponseEntity<Movie> findMovieById(@PathVariable java.lang.Integer id) {
+    public ResponseEntity<Movie> findMovieById(@PathVariable Integer id) {
         Movie movieById = movieService.findMovieById(id);
 
         return ResponseEntity.ok(movieById);
@@ -41,21 +40,21 @@ public class MovieController {
     }
 
     @PutMapping("/movie/{id}")
-    public ResponseEntity<Movie> updateMovie(@RequestBody Movie movie, @PathVariable java.lang.Integer id) {
+    public ResponseEntity<Movie> updateMovie(@RequestBody Movie movie, @PathVariable Integer id) {
         Movie updatedMovie = movieService.updateMovie(movie, id);
 
         return ResponseEntity.ok(updatedMovie);
     }
 
     @PatchMapping("/movie/{id}")
-    public ResponseEntity<Movie> partiallyUpdateMovie(@RequestBody Movie movie, @PathVariable java.lang.Integer id) {
+    public ResponseEntity<Movie> partiallyUpdateMovie(@RequestBody Movie movie, @PathVariable Integer id) {
         Movie partiallyUpdatedMovie = movieService.updateMovie(movie, id);
 
         return ResponseEntity.ok(partiallyUpdatedMovie);
     }
 
     @DeleteMapping("movie/{id}")
-    public ResponseEntity<Void> deleteMovieById(@PathVariable java.lang.Integer id) {
+    public ResponseEntity<Void> deleteMovieById(@PathVariable Integer id) {
         movieService.deleteMovieById(id);
 
         return ResponseEntity.noContent().build();

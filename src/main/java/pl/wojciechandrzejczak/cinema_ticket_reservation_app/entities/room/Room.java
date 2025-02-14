@@ -1,7 +1,9 @@
 package pl.wojciechandrzejczak.cinema_ticket_reservation_app.entities.room;
 
-import jakarta.persistence.*;
-import pl.wojciechandrzejczak.cinema_ticket_reservation_app.entities.seance.Seance;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 @Entity
 public class Room {

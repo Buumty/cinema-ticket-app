@@ -1,7 +1,6 @@
 package pl.wojciechandrzejczak.cinema_ticket_reservation_app.entities.movie;
 
 import jakarta.persistence.*;
-import pl.wojciechandrzejczak.cinema_ticket_reservation_app.entities.seance.Seance;
 
 @Entity
 public class Movie {

@@ -20,15 +20,21 @@ public class Seance {
     private Integer ticketsAvailable;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
+    @PrePersist
+    @PreUpdate
+    public void calculateEndTime() {
+        if (startTime != null && movie != null) {
+            endTime = startTime.plusMinutes(movie.getLength());
+        }
+    }
 
     public Seance(){}
 
-    public Seance(Movie movie, Room room, Integer ticketsAvailable, LocalDateTime startTime, LocalDateTime endTime) {
+    public Seance(Movie movie, Room room, Integer ticketsAvailable, LocalDateTime startTime) {
         this.movie = movie;
         this.room = room;
         this.ticketsAvailable = ticketsAvailable;
         this.startTime = startTime;
-        this.endTime = endTime;
     }
 
     public Integer getId() {

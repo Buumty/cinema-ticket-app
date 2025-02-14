@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.wojciechandrzejczak.cinema_ticket_reservation_app.entities.room.RoomService;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -30,6 +31,7 @@ public class SeanceService {
 
     public Seance createSeance(Seance seance) {
         seance.setTicketsAvailable(seance.getRoom().getSeatsNumber());
+        seance.setEndTime(seance.getStartTime().plusMinutes(seance.getMovie().getLength()));
         return seanceRepository.save(seance);
     }
 

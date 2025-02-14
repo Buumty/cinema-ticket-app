@@ -23,6 +23,5 @@ public class AdminHeader extends HorizontalLayout {
         verticalLayout.add(new RouterLink("Seance", SeanceView.class));
         verticalLayout.add(new Span("Logout"));
         add(verticalLayout);
-        add();
     }
 }

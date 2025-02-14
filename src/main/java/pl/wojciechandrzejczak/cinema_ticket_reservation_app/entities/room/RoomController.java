@@ -25,7 +25,7 @@ public class RoomController {
     }
 
     @GetMapping("/room/{id}")
-    public ResponseEntity<Room> findRoomById(@PathVariable java.lang.Integer id) {
+    public ResponseEntity<Room> findRoomById(@PathVariable Integer id) {
         Room roomById = roomService.findRoomById(id);
 
         return ResponseEntity.ok(roomById);
@@ -35,27 +35,27 @@ public class RoomController {
     public ResponseEntity<Room> createRoom(@RequestBody Room room) {
         Room createdRoom = roomService.createRoom(room);
 
-        URI location = URI.create("/room" + createdRoom.getId());
+        URI location = URI.create("/room/" + createdRoom.getId());
 
         return ResponseEntity.created(location).body(createdRoom);
     }
 
     @PutMapping("/room/{id}")
-    public ResponseEntity<Room> updateRoom(@RequestBody Room room, @PathVariable java.lang.Integer id) {
+    public ResponseEntity<Room> updateRoom(@RequestBody Room room, @PathVariable Integer id) {
         Room updatedRoom = roomService.updateRoom(room, id);
 
         return ResponseEntity.ok(updatedRoom);
     }
 
     @PatchMapping("/room/{id}")
-    public ResponseEntity<Room> partiallyUpdateRoom(@RequestBody Room room, @PathVariable java.lang.Integer id) {
+    public ResponseEntity<Room> partiallyUpdateRoom(@RequestBody Room room, @PathVariable Integer id) {
         Room partiallyUpdatedRoom = roomService.updateRoom(room, id);
 
         return ResponseEntity.ok(partiallyUpdatedRoom);
     }
 
     @DeleteMapping("/room/{id}")
-    public ResponseEntity<Void> deleteRoomById(@PathVariable java.lang.Integer id) {
+    public ResponseEntity<Void> deleteRoomById(@PathVariable Integer id) {
         roomService.deleteRoomById(id);
 
         return ResponseEntity.noContent().build();
