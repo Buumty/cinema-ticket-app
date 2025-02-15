@@ -12,8 +12,8 @@ import com.vaadin.flow.spring.annotation.UIScope;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.wojciechandrzejczak.cinema_ticket_reservation_app.entities.seance.Seance;
 import pl.wojciechandrzejczak.cinema_ticket_reservation_app.entities.seance.SeanceService;
-import pl.wojciechandrzejczak.cinema_ticket_reservation_app.views.components.AdminFooter;
-import pl.wojciechandrzejczak.cinema_ticket_reservation_app.views.components.AdminHeader;
+import pl.wojciechandrzejczak.cinema_ticket_reservation_app.views.components.UserFooter;
+import pl.wojciechandrzejczak.cinema_ticket_reservation_app.views.components.UserHeader;
 
 @UIScope
 @Route("")
@@ -25,9 +25,9 @@ public class MainView extends VerticalLayout {
         setSizeFull();
         setPadding(true);
         setSpacing(true);
-        add(new AdminHeader());
+        add(new UserHeader());
         add(seanceVirtualList());
-        add(new AdminFooter());
+        add(new UserFooter());
     }
 
     private VirtualList<Seance> seanceVirtualList() {
@@ -37,7 +37,7 @@ public class MainView extends VerticalLayout {
         seanceVirtualList.setRenderer(seanceComponentRenderer);
         return seanceVirtualList;
     }
-    private ComponentRenderer<Component, Seance> seanceComponentRenderer = new ComponentRenderer<>(seanceComponentRenderer -> {
+    private final ComponentRenderer<Component, Seance> seanceComponentRenderer = new ComponentRenderer<>(seanceComponentRenderer -> {
 
         HorizontalLayout seanceLayout = new HorizontalLayout();
         seanceLayout.setSpacing(true);

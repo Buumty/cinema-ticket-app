@@ -39,12 +39,13 @@ public class RoomServiceTest {
 
     @Test
     public void givenOneRoom_whenFindAllRooms_thenReturnListWithOneEntity() {
-        Mockito.when(roomRepository.findAll()).thenReturn(List.of(new Room(100, "Sapphire")));
+        Mockito.when(roomRepository.findAll()).thenReturn(List.of(new Room(5, 10, "Sapphire")));
         List<Room> allRooms = roomService.findAllRooms();
 
         assertNotNull(allRooms);
         assertEquals(1, allRooms.size(), "The list should be the size of one!");
-        assertEquals(100, allRooms.get(0).getSeatsNumber(), "There should be 100 tickets available but is not!");
+        assertEquals(5, allRooms.get(0).getRows(), "There should be 5 rows but is not!");
+        assertEquals(10, allRooms.get(0).getColumns(), "There should be 10 columns but is not!");
         assertEquals("Sapphire", allRooms.get(0).getName(), "The name should be 'Sapphire' but is not!");
         verify(roomRepository, times(1)).findAll();
     }
@@ -65,7 +66,8 @@ public class RoomServiceTest {
         Room room = new Room();
         room.setId(1);
         room.setName("Sapphire");
-        room.setSeatsNumber(100);
+        room.setColumns(10);
+        room.setRows(5);
 
         Mockito.when(roomRepository.findById(1)).thenReturn(Optional.of(room));
         Room roomById = roomService.findRoomById(1);
@@ -73,7 +75,8 @@ public class RoomServiceTest {
         assertNotNull(roomById);
         assertEquals(1, roomById.getId(), "The ID of room should be 1 but is not!");
         assertEquals("Sapphire", roomById.getName(), "The room name should be 'Sapphire' but is not!");
-        assertEquals(100, roomById.getSeatsNumber(), "The room seats number should be 100 but is not!");
+        assertEquals(5, roomById.getRows(), "There should be 5 rows but is not!");
+        assertEquals(10, roomById.getColumns(), "There should be 10 columns but is not!");
         verify(roomRepository, times(1)).findById(1);
     }
 
@@ -93,7 +96,8 @@ public class RoomServiceTest {
         Room room = new Room();
         room.setId(1);
         room.setName("Sapphire");
-        room.setSeatsNumber(100);
+        room.setRows(5);
+        room.setColumns(10);
 
         Mockito.when(roomRepository.save(room)).thenReturn(room);
         Room createdRoom = roomService.createRoom(room);
@@ -101,7 +105,8 @@ public class RoomServiceTest {
         assertNotNull(createdRoom);
         assertEquals(1, createdRoom.getId(), "The ID of room should be 1 but is not!");
         assertEquals("Sapphire", createdRoom.getName(), "The room name should be 'Sapphire' but is not!");
-        assertEquals(100, createdRoom.getSeatsNumber(), "The room seats number should be 100 but is not!");
+        assertEquals(5, createdRoom.getRows(), "There should be 5 rows but is not!");
+        assertEquals(10, createdRoom.getColumns(), "There should be 10 columns but is not!");
         verify(roomRepository, Mockito.times(1)).save(room);
     }
 
@@ -110,11 +115,13 @@ public class RoomServiceTest {
         Room existingRoom = new Room();
         existingRoom.setId(1);
         existingRoom.setName("Emerald");
-        existingRoom.setSeatsNumber(50);
+        existingRoom.setRows(5);
+        existingRoom.setColumns(10);
 
         Room newRoom = new Room();
         newRoom.setName("Sapphire");
-        newRoom.setSeatsNumber(100);
+        newRoom.setRows(10);
+        newRoom.setColumns(20);
 
         when(roomRepository.findById(1)).thenReturn(Optional.of(existingRoom));
         when(roomRepository.save(existingRoom)).thenReturn(existingRoom);
@@ -123,7 +130,8 @@ public class RoomServiceTest {
         assertNotNull(updatedRoom);
         assertEquals(1, updatedRoom.getId(), "The ID of updated room should be 1 but is not!");
         assertEquals("Sapphire", updatedRoom.getName(), "The room name should be 'Sapphire' but is not!");
-        assertEquals(100, updatedRoom.getSeatsNumber(), "The room seats number should be 100 but is not!");
+        assertEquals(10, updatedRoom.getRows(), "There should be 10 rows but is not!");
+        assertEquals(20, updatedRoom.getColumns(), "There should be 20 columns but is not!");
         verify(roomRepository, times(1)).findById(1);
         verify(roomRepository, times(1)).save(existingRoom);
     }
@@ -134,7 +142,8 @@ public class RoomServiceTest {
         Room room = new Room();
         room.setId(roomId);
         room.setName("Sapphire");
-        room.setSeatsNumber(100);
+        room.setRows(5);
+        room.setColumns(10);
 
         Mockito.when(roomRepository.findById(roomId)).thenReturn(Optional.of(room));
         roomService.deleteRoomById(roomId);

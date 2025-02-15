@@ -28,6 +28,7 @@ public class Seance {
         }
     }
 
+
     public Seance(){}
 
     public Seance(Movie movie, Room room, Integer ticketsAvailable, LocalDateTime startTime) {

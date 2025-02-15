@@ -48,6 +48,8 @@ public class RoomView extends VerticalLayout {
         roomGrid.setHeightFull();
 
         roomGrid.addColumn(Room::getName).setHeader("Name");
+        roomGrid.addColumn(Room::getRows).setHeader("Rows");
+        roomGrid.addColumn(Room::getColumns).setHeader("Columns");
         roomGrid.addColumn(Room::getSeatsNumber).setHeader("Seats number");
 
         roomGrid.setItems(DataProvider.ofCollection(roomService.findAllRooms()));
@@ -61,21 +63,23 @@ public class RoomView extends VerticalLayout {
         roomDataEntryLayout.setHeightFull();
 
         TextField name = new TextField("Name");
-        NumberField seatsNumber = new NumberField("Seats number");
+        NumberField rows = new NumberField("Rows");
+        NumberField columns = new NumberField("Columns");
 
         roomDataEntryLayout.add(name);
-        roomDataEntryLayout.add(seatsNumber);
-        roomDataEntryLayout.add(setUpSaveRoomButton(name,seatsNumber));
+        roomDataEntryLayout.add(rows);
+        roomDataEntryLayout.add(columns);
+        roomDataEntryLayout.add(setUpSaveRoomButton(name,rows,columns));
         roomDataEntryLayout.add(setUpDeleteRoomButton());
 
         return roomDataEntryLayout;
     }
 
-    private Button setUpSaveRoomButton(TextField name, NumberField seatsNumber) {
+    private Button setUpSaveRoomButton(TextField name, NumberField rows, NumberField columns) {
         Button saveRoom = new Button("Save room");
 
         saveRoom.addClickListener(buttonClickEvent-> {
-            roomService.createRoom(new Room(seatsNumber.getValue().intValue(),name.getValue()));
+            roomService.createRoom(new Room(rows.getValue().intValue(), columns.getValue().intValue(), name.getValue()));
             roomGrid.setItems(roomService.findAllRooms());
         });
 
