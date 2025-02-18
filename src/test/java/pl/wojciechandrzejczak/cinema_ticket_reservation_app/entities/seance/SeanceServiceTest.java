@@ -87,7 +87,10 @@ public class SeanceServiceTest {
 
     @Test
     public void givenSeance_whenFindSeanceById_thenReturnCorrectSeance() {
+        Movie movie = new Movie();
+        movie.setLength(30);
         Seance seance = getSeance();
+        seance.setMovie(movie);
 
         when(seanceRepository.save(seance)).thenReturn(seance);
         Seance createdSeance = seanceService.createSeance(seance);
@@ -98,7 +101,7 @@ public class SeanceServiceTest {
         assertEquals(1, createdSeance.getId(),"The seance id should be 1 but is not!");
         assertEquals(100, createdSeance.getTicketsAvailable(), "The seance tickets available should be 100 but is not!");
         assertEquals(LocalDateTime.of(2023,8,12,14,30,45), createdSeance.getStartTime());
-        assertEquals(LocalDateTime.of(2024,11,6,8,15,23), createdSeance.getEndTime());
+        assertEquals(LocalDateTime.of(2023,8,12,15,0,45), createdSeance.getEndTime());
         verify(seanceRepository, times(1)).save(seance);
     }
 

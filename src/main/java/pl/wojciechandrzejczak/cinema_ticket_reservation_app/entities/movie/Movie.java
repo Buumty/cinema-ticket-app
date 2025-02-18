@@ -13,17 +13,17 @@ public class Movie {
     private String description;
     public Movie(){}
 
-    public Movie(String name, java.lang.Integer length, String description) {
+    public Movie(String name, Integer length, String description) {
         this.name = name;
         this.length = length;
         this.description = description;
     }
 
-    public java.lang.Integer getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(java.lang.Integer id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -35,11 +35,11 @@ public class Movie {
         this.name = name;
     }
 
-    public java.lang.Integer getLength() {
+    public Integer getLength() {
         return length;
     }
 
-    public void setLength(java.lang.Integer lengthInMinutes) {
+    public void setLength(Integer lengthInMinutes) {
         this.length = lengthInMinutes;
     }
 

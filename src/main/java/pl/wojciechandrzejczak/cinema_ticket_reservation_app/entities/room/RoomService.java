@@ -35,7 +35,12 @@ public class RoomService {
         if (room.getName() != null) {
             dbRoom.setName(room.getName());
         }
-
+        if (room.getColumns() != null) {
+            dbRoom.setColumns(room.getColumns());
+        }
+        if (room.getRows() != null) {
+         dbRoom.setRows(room.getRows());
+        }
         if (room.getSeatsNumber() != null) {
             dbRoom.setSeatsNumber(room.getSeatsNumber());
         }
