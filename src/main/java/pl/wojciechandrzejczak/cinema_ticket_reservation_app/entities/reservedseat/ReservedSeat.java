@@ -16,6 +16,14 @@ public class ReservedSeat {
     private int rowNumber;
     private int seatNumber;
 
+    public ReservedSeat() {}
+
+    public ReservedSeat(Seance seance, int rowNumber, int seatNumber) {
+        this.seance = seance;
+        this.rowNumber = rowNumber;
+        this.seatNumber = seatNumber;
+    }
+
     public Long getId() {
         return id;
     }

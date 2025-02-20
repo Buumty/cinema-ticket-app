@@ -58,7 +58,7 @@ public class TicketService {
         ticketRepository.deleteById(id);
     }
 
-    public void generatePdfTicket(Ticket ticket, Seance seance, String seat) throws Exception {
+    public byte[] generatePdfTicket(Ticket ticket, Seance seance, String seat) throws Exception {
         Document document = new Document();
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
@@ -74,20 +74,6 @@ public class TicketService {
 
         document.close();
 
-        String ticketDirectory = "C:/Users/wojtas/Desktop/Projekty-Java/advanced/tickets-directory";  // Zmień na odpowiednią ścieżkę na Twoim serwerze
-        File directory = new File(ticketDirectory);
-        if (!directory.exists()) {
-            directory.mkdirs();  // Tworzy katalog, jeśli nie istnieje
-        }
-
-        // Zapisz plik PDF
-        try (FileOutputStream fos = new FileOutputStream("ticket_" + UUID.randomUUID() + ".pdf")) {
-            fos.write(outputStream.toByteArray());
-            System.out.println("ticket_" + ticket.getId() + ".pdf");
-            System.out.println("PDF saved sucessfully");
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("ERROR");
-        }
+        return outputStream.toByteArray();
     }
 }

@@ -4,9 +4,11 @@ package pl.wojciechandrzejczak.cinema_ticket_reservation_app.views.userviews;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
+import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.StreamResource;
 import com.vaadin.flow.spring.annotation.UIScope;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.wojciechandrzejczak.cinema_ticket_reservation_app.entities.reservedseat.ReservedSeat;
@@ -14,14 +16,14 @@ import pl.wojciechandrzejczak.cinema_ticket_reservation_app.entities.reservedsea
 import pl.wojciechandrzejczak.cinema_ticket_reservation_app.entities.seance.Seance;
 import pl.wojciechandrzejczak.cinema_ticket_reservation_app.entities.seance.SeanceService;
 import pl.wojciechandrzejczak.cinema_ticket_reservation_app.entities.ticket.Ticket;
+import pl.wojciechandrzejczak.cinema_ticket_reservation_app.entities.ticket.TicketDetails;
 import pl.wojciechandrzejczak.cinema_ticket_reservation_app.entities.ticket.TicketService;
 import pl.wojciechandrzejczak.cinema_ticket_reservation_app.views.components.SeatButton;
 import pl.wojciechandrzejczak.cinema_ticket_reservation_app.views.components.UserFooter;
 import pl.wojciechandrzejczak.cinema_ticket_reservation_app.views.components.UserHeader;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.ByteArrayInputStream;
+import java.util.*;
 
 @UIScope
 @Route("hall")
@@ -33,88 +35,71 @@ public class HallView extends VerticalLayout {
     private ComboBox<Seance> seanceComboBox;
     private Button reserveTicketsButton;
     private Button selectTicketsButton;
-    private BigDecimal finalPrice;
     private final List<SeatButton> selectedSeats = new ArrayList<>();
-    private final List<Ticket> selectedTickets = new ArrayList<>();
+    private final Map<SeatButton, Ticket> selectedTickets = new HashMap<>();
+    private final List<ComboBox<Ticket>> ticketComboBoxes = new ArrayList<>();
+    private Text totalPriceText;
 
     @Autowired
     public HallView(SeanceService seanceService, TicketService ticketService, ReservedSeatRepository reservedSeatRepository) {
         this.seanceService = seanceService;
         this.ticketService = ticketService;
         this.reservedSeatRepository = reservedSeatRepository;
+
         setJustifyContentMode(JustifyContentMode.CENTER);
+        setAlignItems(Alignment.CENTER);
         setSizeFull();
         add(new UserHeader());
-        mainBody();
+        add(mainBody());
         add(new UserFooter());
     }
 
-    private void mainBody() {
+    private HorizontalLayout mainBody() {
         HorizontalLayout horizontalLayout = new HorizontalLayout();
-        horizontalLayout.setHeight("80%");
         horizontalLayout.setWidth("80%");
+        horizontalLayout.setHeightFull();
         horizontalLayout.setJustifyContentMode(JustifyContentMode.CENTER);
 
-        List<Seance> allSeances = seanceService.findAllSeances();
-        seanceComboBox = new ComboBox<>("Pick a seance", allSeances);
-        seanceComboBox.setItemLabelGenerator(seance ->
-                seance.getMovie().getName() + " - Hall: " + seance.getRoom().getName());
-
-        seanceComboBox.addValueChangeListener(event -> {
-            seatLayout.removeAll();
-            if (event.getValue() != null) {
-                createSeatLayout(event.getValue());
-            }
-        });
-        seanceComboBox.setWidth("25%");
-
         selectTicketsButton = new Button("Select Tickets");
+        reserveTicketsButton = new Button("Reserve Tickets");
+        reserveTicketsButton.setEnabled(false);
 
-
-
+        setSeanceComboBox();
         horizontalLayout.add(seanceComboBox, seatLayout, rightPanel());
-        add(horizontalLayout);
+
+        return horizontalLayout;
     }
+
+
 
     private HorizontalLayout rightPanel() {
         HorizontalLayout horizontalLayout = new HorizontalLayout();
-        VerticalLayout verticalLayout1 = new VerticalLayout();
-        finalPrice = BigDecimal.valueOf(0);
-        verticalLayout1.add(selectTicketsButton);
+        VerticalLayout ticketSelectionLayout = new VerticalLayout();
+        VerticalLayout ticketReservationLayout = new VerticalLayout();
+        totalPriceText = new Text("Total Price:  0");
+        ticketSelectionLayout.add(selectTicketsButton);
+        ticketReservationLayout.add(reserveTicketsButton, totalPriceText);
+
         selectTicketsButton.addClickListener(buttonClickEvent -> {
-            verticalLayout1.add(ticketsComboBoxesLayout());
+            totalPriceText.setText("Total Price: 0");
+            ticketSelectionLayout.removeAll();
+            ticketSelectionLayout.add(selectTicketsButton, ticketsComboBoxesLayout());
         });
 
-        VerticalLayout verticalLayout2 = new VerticalLayout();
-        reserveTicketsButton = new Button("Reserve Tickets");
-        reserveTicketsButton.setEnabled(false);
         reserveTicketsButton.addClickListener(event -> {
-            for (SeatButton seatButton : selectedSeats) {
-                String[] seatPosition = seatButton.getText().split("-");
-                int row = Integer.parseInt(seatPosition[0]) - 1;
-                int seat = Integer.parseInt(seatPosition[1]) - 1;
-                reserveTickets(seanceComboBox.getValue(), row, seat);
-                System.out.println("Saving ");
-            }
-            int i = 0;
-            for (Ticket selectedTicket : selectedTickets) {
-                try {
-                    System.out.println("GenerateTicekt");
-                    ticketService.generatePdfTicket(selectedTicket, seanceComboBox.getValue(), selectedSeats.get(i).getText());
-                    i++;
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
+            reserveSelectedTickets();
+            Seance selectedSeance = seanceComboBox.getValue();
+            if (selectedSeance != null) {
+                for (int i = 0; i < selectedSeats.size(); i++) {
+                    Anchor downloadLink = createDownloadLink(ticketComboBoxes.get(i).getValue(), selectedSeance, selectedSeats.get(i).getText());
+                    ticketSelectionLayout.add(downloadLink);
                 }
             }
-            selectedSeats.clear();
-            seatLayout.removeAll();
-            createSeatLayout(seanceComboBox.getValue());
         });
-        Text text = new Text(finalPrice.toString());
 
-        verticalLayout2.add(reserveTicketsButton, text);
 
-        horizontalLayout.add(verticalLayout1, reserveTicketsButton);
+
+        horizontalLayout.add(ticketSelectionLayout, ticketReservationLayout);
         return horizontalLayout;
     }
 
@@ -127,11 +112,12 @@ public class HallView extends VerticalLayout {
             HorizontalLayout rowLayout = new HorizontalLayout();
             for (int seat = 0; seat < seance.getRoom().getColumns(); seat++) {
                 final int seatFinal = seat;
-                SeatButton seatButton = new SeatButton();
-                seatButton.setText((row + 1) + "-" + (seat + 1));
+                SeatButton seatButton = new SeatButton((row + 1) + "-" + (seat + 1));
                 seatButton.setValue(true);
+
                 boolean isReserved = reservedSeats.stream()
                         .anyMatch(reservedSeat -> reservedSeat.getRowNumber() == rowFinal && reservedSeat.getSeatNumber() == seatFinal);
+
                 if (isReserved) {
                     seatButton.setEnabled(false);
                     seatButton.getStyle().set("background-color", SeatButton.DISABLED_BACKGROUND_COLOR);
@@ -144,38 +130,111 @@ public class HallView extends VerticalLayout {
                     } else {
                         selectedSeats.add(seatButton);
                     }
-                    reserveTicketsButton.setEnabled(!selectedSeats.isEmpty());
-
                 });
-
                 rowLayout.add(seatButton);
             }
             seatLayout.add(rowLayout);
         }
-        seatLayout.setWidth("100%");
-        seatLayout.setHeightFull();
     }
-    private void reserveTickets(Seance seance, int row, int seat) {
-        ReservedSeat reservedSeat = new ReservedSeat();
-        reservedSeat.setSeance(seance);
-        reservedSeat.setRowNumber(row);
-        reservedSeat.setSeatNumber(seat);
 
+    private void reserveSelectedTickets() {
+        if (seanceComboBox.getValue() == null) return;
+
+        for (SeatButton seatButton : selectedSeats) {
+            String[] seatPosition = seatButton.getText().split("-");
+            int row = Integer.parseInt(seatPosition[0]) - 1;
+            int seat = Integer.parseInt(seatPosition[1]) - 1;
+            reserveTickets(seanceComboBox.getValue(), row, seat);
+        }
+
+        for (int i = 0; i < selectedSeats.size(); i++) {
+            List<Ticket> selectedTicketList = selectedTickets.values().stream().toList();
+            try {
+                System.out.println("GenerateTicekt");
+
+                ticketService.generatePdfTicket(selectedTicketList.get(i), seanceComboBox.getValue(), selectedSeats.get(i).getText());
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+        selectedSeats.clear();
+        selectedTickets.clear();
+        seatLayout.removeAll();
+        createSeatLayout(seanceComboBox.getValue());
+
+    }
+
+
+    private void reserveTickets(Seance seance, int row, int seat) {
+        ReservedSeat reservedSeat = new ReservedSeat(seance, row, seat);
         reservedSeatRepository.save(reservedSeat);
     }
 
+    private void setSeanceComboBox() {
+        List<Seance> allSeances = seanceService.findAllSeances();
+        seanceComboBox = new ComboBox<>("Pick a seance", allSeances);
+        seanceComboBox.setItemLabelGenerator(seance ->
+                seance.getMovie().getName() + " - Hall: " + seance.getRoom().getName());
+
+        seanceComboBox.addValueChangeListener(event -> {
+            seatLayout.removeAll();
+            if (event.getValue() != null) {
+                createSeatLayout(event.getValue());
+            }
+        });
+        seanceComboBox.setWidth("25%");
+    }
     private VerticalLayout ticketsComboBoxesLayout() {
-        VerticalLayout horizontalLayout = new VerticalLayout();
+        VerticalLayout ticketSelectionLayout = new VerticalLayout();
+        ticketSelectionLayout.removeAll();
+        ticketComboBoxes.clear();
+        selectedTickets.clear();
+
         for (SeatButton selectedSeat : selectedSeats) {
             ComboBox<Ticket> ticketComboBox = new ComboBox<>();
             ticketComboBox.setItems(ticketService.findAllTickets());
             ticketComboBox.setItemLabelGenerator(ticket -> (ticket.getType() + " - Price - " + ticket.getPrice()));
             ticketComboBox.addValueChangeListener(event -> {
-                selectedTickets.add(ticketComboBox.getValue());
+                if (event.getValue() != null) {
+                    selectedTickets.put(selectedSeat, event.getValue());
+
+
+                } else {
+                    selectedTickets.remove(selectedSeat);
+                }
+
+                reserveTicketsButton.setEnabled(areAllTicketsSelected());
+                updateTotalPrice();
             });
-            horizontalLayout.add(ticketComboBox);
+            ticketComboBoxes.add(ticketComboBox);
+            ticketSelectionLayout.add(ticketComboBox);
         }
 
-        return horizontalLayout;
+        return ticketSelectionLayout;
+    }
+
+    private void updateTotalPrice() {
+
+        double totalPriceDouble = selectedTickets.values().stream().mapToDouble(Ticket::getPrice).sum();
+        totalPriceText.setText("Total Price: " + totalPriceDouble);
+    }
+
+    private boolean areAllTicketsSelected() {
+        return ticketComboBoxes.stream().allMatch(comboBox -> comboBox.getValue() != null);
+    }
+
+    private Anchor createDownloadLink(Ticket ticket, Seance seance, String seat) {
+        try {
+            byte[] pdfBytes = ticketService.generatePdfTicket(ticket, seance, seat);
+
+            StreamResource resource = new StreamResource("ticket_" + ticket.getId() + ".pdf",
+                    () -> new ByteArrayInputStream(pdfBytes));
+            resource.setContentType("application/pdf");
+
+            return new Anchor(resource, "Download Ticket");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Anchor("#", "Error generating ticket");
+        }
     }
 }

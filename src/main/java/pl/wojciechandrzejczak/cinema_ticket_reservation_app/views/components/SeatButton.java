@@ -7,8 +7,9 @@ public class SeatButton extends Button {
     public static final String UNCHECKED_BACKGROUND_COLOR = "#00FF00";
     public static final String CHECKED_BACKGROUND_COLOR = "#FFFF00";
     private boolean value = false;
-    public SeatButton(){
+    public SeatButton(String text){
         getStyle().set("background-color", UNCHECKED_BACKGROUND_COLOR);
+        setText(text);
     }
     public void changeValue() {
         value = !value;
