@@ -6,20 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import pl.wojciechandrzejczak.cinema_ticket_reservation_app.entities.ticket.Ticket;
 import pl.wojciechandrzejczak.cinema_ticket_reservation_app.entities.ticket.TicketService;
 
-public class TicketComboBox {
+public class TicketComboBox extends ComboBox<Ticket> {
     private final TicketService ticketService;
 
     @Autowired
     public TicketComboBox(TicketService ticketService) {
         this.ticketService = ticketService;
+
+        setSizeFull();
+        setItems(DataProvider.ofCollection(ticketService.findAllTickets()));
+        setItemLabelGenerator(ticket -> (ticket.getType() + " - Price - " + ticket.getPrice()));
     }
 
-    private ComboBox<Ticket> ticketComboBox() {
-        ComboBox<Ticket> ticketComboBox = new ComboBox<>("Ticket");
-        ticketComboBox.setSizeFull();
-        ticketComboBox.setItems(DataProvider.ofCollection(ticketService.findAllTickets()));
-        ticketComboBox.setItemLabelGenerator(ticket -> (ticket.getType() + " - Price - " + ticket.getPrice()));
-
-        return ticketComboBox;
-    }
 }

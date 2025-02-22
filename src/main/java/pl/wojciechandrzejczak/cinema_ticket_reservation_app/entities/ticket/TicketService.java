@@ -58,22 +58,5 @@ public class TicketService {
         ticketRepository.deleteById(id);
     }
 
-    public byte[] generatePdfTicket(Ticket ticket, Seance seance, String seat) throws Exception {
-        Document document = new Document();
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
-        PdfWriter.getInstance(document, outputStream);
-        document.open();
-
-        // Dodawanie danych do PDF
-        document.add(new Paragraph("Ticket for Seance: " + seance.getMovie().getName()));
-        document.add(new Paragraph("Seat: " + seat));
-        document.add(new Paragraph("Ticket Type: " + ticket.getType()));
-        document.add(new Paragraph("Price: " + ticket.getPrice()));
-        System.out.println("Document content added");
-
-        document.close();
-
-        return outputStream.toByteArray();
-    }
 }

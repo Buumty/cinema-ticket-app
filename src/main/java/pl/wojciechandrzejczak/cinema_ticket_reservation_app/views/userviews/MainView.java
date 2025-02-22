@@ -8,6 +8,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.virtuallist.VirtualList;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.auth.AnonymousAllowed;
 import com.vaadin.flow.spring.annotation.UIScope;
 import org.springframework.beans.factory.annotation.Autowired;
 import pl.wojciechandrzejczak.cinema_ticket_reservation_app.entities.seance.Seance;
@@ -15,6 +16,7 @@ import pl.wojciechandrzejczak.cinema_ticket_reservation_app.entities.seance.Sean
 import pl.wojciechandrzejczak.cinema_ticket_reservation_app.views.components.UserFooter;
 import pl.wojciechandrzejczak.cinema_ticket_reservation_app.views.components.UserHeader;
 
+@AnonymousAllowed
 @UIScope
 @Route("")
 public class MainView extends VerticalLayout {
