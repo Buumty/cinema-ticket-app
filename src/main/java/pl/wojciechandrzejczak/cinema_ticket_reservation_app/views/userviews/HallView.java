@@ -29,6 +29,8 @@ public class HallView extends VerticalLayout {
     private final SeanceService seanceService;
     private final TicketService ticketService;
     private final ReservationService reservationService;
+
+
     private final ReservedSeatRepository reservedSeatRepository;
     private final VerticalLayout seatLayout = new VerticalLayout();
     private Button reserveTicketsButton;
