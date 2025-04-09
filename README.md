@@ -23,18 +23,18 @@ Projekt jest w trakcie rozwoju i służy do nauki tworzenia aplikacji full-stack
 - **JUnit**
 
 ## 📁 Struktura katalogów
-
-src/
-├── main/
-│   ├── java/pl/wojtekandrzejczak/cinema/
-│   │   ├── cinema_hall/       <- logika sal kinowych
-│   │   ├── movie/             <- filmy i seanse
-│   │   ├── reservation/       <- rezerwacje miejsc
-│   │   └── CinemaApplication  <- punkt startowy aplikacji
-│   └── resources/
-│       └── application.properties
-└── test/
-└── java/...               <- testy jednostkowe
+      ````
+      src/
+      ├── main/
+      │   ├── java/pl/wojtekandrzejczak/cinema/
+      │   │   ├── cinema_hall/       <- logika sal kinowych
+      │   │   ├── movie/             <- filmy i seanse
+      │   │   ├── reservation/       <- rezerwacje miejsc
+      │   │   └── CinemaApplication  <- punkt startowy aplikacji
+      │   └── resources/
+      │       └── application.properties
+      └── test/
+      └── java/...               <- testy jednostkowe
 
 
 ## 🚀 Jak uruchomić

@@ -1,0 +1,35 @@
+services:
+  app:
+    build: .
+    container_name: cinema-ticket-reservation-app
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/cinema
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=admin
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    networks:
+      - cinema-network
+
+  db:
+    image: postgres:13
+    container_name: cinema-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+    volumes:
+      - ./sql-init:/docker-entrypoint-initdb.d
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - cinema-network
+
+networks:
+  cinema-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+    driver: local
