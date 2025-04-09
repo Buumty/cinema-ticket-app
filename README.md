@@ -35,7 +35,7 @@ Projekt jest w trakcie rozwoju i służy do nauki tworzenia aplikacji full-stack
       │   └── resources/
       │       └── application.properties
       └── test/
-      └── java/...               <- testy jednostkowe
+            └── java/...               <- testy jednostkowe
 
 ## 🚀 Jak uruchomić
 
