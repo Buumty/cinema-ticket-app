@@ -24,19 +24,18 @@ Projekt jest w trakcie rozwoju i służy do nauki tworzenia aplikacji full-stack
 
 ## 📁 Struktura katalogów
 
-   ```bash
-   src/
-   ├── main/
-   │   ├── java/pl/wojtekandrzejczak/cinema/
-   │   │   ├── cinema_hall/       <- logika sal kinowych
-   │   │   ├── movie/             <- filmy i seanse
-   │   │   ├── reservation/       <- rezerwacje miejsc
-   │   │   └── CinemaApplication  <- punkt startowy aplikacji
-   │   └── resources/
-   │       └── application.properties
-   └── test/
-   └── java/...               <- testy jednostkowe
-
+      ```bash
+      src/
+      ├── main/
+      │   ├── java/pl/wojtekandrzejczak/cinema/
+      │   │   ├── cinema_hall/       <- logika sal kinowych
+      │   │   ├── movie/             <- filmy i seanse
+      │   │   ├── reservation/       <- rezerwacje miejsc
+      │   │   └── CinemaApplication  <- punkt startowy aplikacji
+      │   └── resources/
+      │       └── application.properties
+      └── test/
+      └── java/...               <- testy jednostkowe
 
 ## 🚀 Jak uruchomić
 
