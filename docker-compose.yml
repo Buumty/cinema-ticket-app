@@ -21,7 +21,6 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: admin
     volumes:
-      - ./sql-init:/docker-entrypoint-initdb.d
       - postgres_data:/var/lib/postgresql/data
     networks:
       - cinema-network
