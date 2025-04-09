@@ -24,6 +24,7 @@ Projekt jest w trakcie rozwoju i służy do nauki tworzenia aplikacji full-stack
 
 ## 📁 Struktura katalogów
 
+```bash
 src/
 ├── main/
 │   ├── java/pl/wojtekandrzejczak/cinema/
