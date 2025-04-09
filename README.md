@@ -23,12 +23,9 @@ Projekt jest w trakcie rozwoju i służy do nauki tworzenia aplikacji full-stack
 - **JUnit**
 
 ## 📁 Struktura katalogów
-<<<<<<< HEAD
-      ````
-=======
 
-      ```bash
->>>>>>> a62384f4ca9aaf5e894427c56aba01451fb0ef4f
+
+      ```
       src/
       ├── main/
       │   ├── java/pl/wojtekandrzejczak/cinema/
@@ -39,12 +36,7 @@ Projekt jest w trakcie rozwoju i służy do nauki tworzenia aplikacji full-stack
       │   └── resources/
       │       └── application.properties
       └── test/
-<<<<<<< HEAD
-      └── java/...               <- testy jednostkowe
-
-=======
             └── java/...               <- testy jednostkowe
->>>>>>> a62384f4ca9aaf5e894427c56aba01451fb0ef4f
 
 ## 🚀 Jak uruchomić
 
