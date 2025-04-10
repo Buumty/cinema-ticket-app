@@ -1,26 +1,31 @@
-FROM maven:3.8.6-openjdk-21-slim AS build
+# Etap 1: Budowanie aplikacji
+FROM openjdk:21-slim AS build
+
+# Instalowanie Mavena w kontenerze
+RUN apt-get update && apt-get install -y maven
 
 # Ustawiamy katalog roboczy
 WORKDIR /app
 
-# Kopiujemy plik pom.xml (lub build.gradle, jeśli używasz Gradle)
+# Kopiujemy plik pom.xml, aby pobrać zależności
 COPY pom.xml ./
 
-# Pobieramy zależności
+# Pobieramy zależności w trybie offline, aby przyspieszyć budowanie
 RUN mvn dependency:go-offline
 
-# Kopiujemy kod źródłowy
+# Kopiujemy źródła aplikacji do kontenera
 COPY src ./src
 
-# Budujemy aplikację
-RUN mvn clean install
+# Budujemy aplikację i tworzymy plik JAR
+RUN mvn clean package -DskipTests
 
-# Kopiujemy wygenerowany plik JAR do kontenera
-FROM openjdk:21-jdk-slim
+# Etap 2: Uruchomienie aplikacji w kontenerze
+FROM openjdk:21-slim
 
+# Ustawiamy katalog roboczy
 WORKDIR /app
 
-# Kopiujemy plik JAR z poprzedniego etapu
+# Kopiujemy wygenerowany plik JAR z poprzedniego etapu
 COPY --from=build /app/target/cinema-ticket-reservation-app-0.0.1-SNAPSHOT.jar cinema-ticket-reservation-app.jar
 
 # Otwieramy port 8080
