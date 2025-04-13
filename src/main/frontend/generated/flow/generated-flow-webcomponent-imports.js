@@ -35,8 +35,8 @@ import 'Frontend/generated/jar-resources/ReactRouterOutletElement.tsx';
 
 const loadOnDemand = (key) => {
   const pending = [];
-  if (key === '89809b9878a7a028206e285e08ea1864642de79328c7ea90dcd2b0774832066f') {
-    pending.push(import('./chunks/chunk-3205b6eaacd69f58323afef2bd0481f3079f1904fc63601627b7163ebbab968a.js'));
+  if (key === 'c0e9c8ca28824b2d903c8fc4f48b12a9e3dcfa469196540ca4379fa83a78e6fc') {
+    pending.push(import('./chunks/chunk-0fd2643921eb3829159972d1ff01834d78a14dd6385c6c70081d5e9bed94bedd.js'));
   }
   if (key === 'dc098d74e6d214221aec7366b3a2a49c3642a80cc4aab80a1f85e752d505bb76') {
     pending.push(import('./chunks/chunk-3205b6eaacd69f58323afef2bd0481f3079f1904fc63601627b7163ebbab968a.js'));
@@ -44,8 +44,8 @@ const loadOnDemand = (key) => {
   if (key === 'c4b8749fd349ab4032079a57cab6ba22c10ab7f66c1dd6a4dccf2c576560c6e9') {
     pending.push(import('./chunks/chunk-0fd2643921eb3829159972d1ff01834d78a14dd6385c6c70081d5e9bed94bedd.js'));
   }
-  if (key === 'c0e9c8ca28824b2d903c8fc4f48b12a9e3dcfa469196540ca4379fa83a78e6fc') {
-    pending.push(import('./chunks/chunk-0fd2643921eb3829159972d1ff01834d78a14dd6385c6c70081d5e9bed94bedd.js'));
+  if (key === '89809b9878a7a028206e285e08ea1864642de79328c7ea90dcd2b0774832066f') {
+    pending.push(import('./chunks/chunk-3205b6eaacd69f58323afef2bd0481f3079f1904fc63601627b7163ebbab968a.js'));
   }
   if (key === 'a2ab0afce10750e2bc4d6b280cf3626a5bf7f69e52afdd8642a89162b489adf1') {
     pending.push(import('./chunks/chunk-d014269d9c69bedb72937cd6256bfc26a13656330b087ddd92e3d669e85a0139.js'));
