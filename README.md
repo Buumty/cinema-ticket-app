@@ -22,6 +22,10 @@ Projekt jest w trakcie rozwoju i służy do nauki tworzenia aplikacji full-stack
 - **PostgreSQL**
 - **JUnit**
 
+## 🐳 Wymagania
+
+- **Docker**
+
 ## 📁 Struktura katalogów
 
 
@@ -47,7 +51,7 @@ Projekt jest w trakcie rozwoju i służy do nauki tworzenia aplikacji full-stack
    
 2. Uruchom aplikację:
     ````
-    ./mvnw spring-boot:run
+    docker-compose up --build
 
 3. Przejdź do przeglądarki i otwórz: http://localhost:8080
 

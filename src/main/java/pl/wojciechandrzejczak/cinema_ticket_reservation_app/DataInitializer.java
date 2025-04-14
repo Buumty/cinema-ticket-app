@@ -1,6 +1,8 @@
 package pl.wojciechandrzejczak.cinema_ticket_reservation_app;
 
-import org.springframework.boot.CommandLineRunner;
+import jakarta.transaction.Transactional;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 import pl.wojciechandrzejczak.cinema_ticket_reservation_app.entities.movie.Movie;
 import pl.wojciechandrzejczak.cinema_ticket_reservation_app.entities.movie.MovieRepository;
@@ -14,7 +16,7 @@ import pl.wojciechandrzejczak.cinema_ticket_reservation_app.entities.ticket.Tick
 import java.time.LocalDateTime;
 
 @Component
-public class DataInitializer implements CommandLineRunner {
+public class DataInitializer  {
     private final MovieRepository movieRepository;
     private final TicketRepository ticketRepository;
     private final RoomRepository roomRepository;
@@ -27,9 +29,10 @@ public class DataInitializer implements CommandLineRunner {
         this.seanceRepository = seanceRepository;
     }
 
-    @Override
-    public void run(String... args) throws Exception {
-        if (movieRepository.count() == 0 && ticketRepository.count() == 0 && roomRepository.count() == 0 && seanceRepository.count() == 0) {
+    @EventListener(ApplicationReadyEvent.class)
+    @Transactional
+    public void init() {
+        if (movieRepository.count() == 0 && ticketRepository.count() == 0 && roomRepository.count() == 0) {
 
             Movie actionMovie = new Movie("Movie-1", 120, "Action");
             Movie adventureMovie = new Movie("Movie-2", 130, "Adventure");
@@ -54,6 +57,7 @@ public class DataInitializer implements CommandLineRunner {
             roomRepository.save(room1);
             roomRepository.save(room2);
             roomRepository.save(room3);
+            System.out.println(roomRepository.findAll());
 
             Seance seance1 = new Seance(actionMovie,room1, room1.getSeatsNumber(), LocalDateTime.of(2025, 7, 22, 12, 30));
             Seance seance2 = new Seance(fantasyMovie, room2, room2.getSeatsNumber(), LocalDateTime.of(2025, 7, 22, 13, 30));
@@ -62,6 +66,7 @@ public class DataInitializer implements CommandLineRunner {
             seanceRepository.save(seance1);
             seanceRepository.save(seance2);
             seanceRepository.save(seance3);
+            System.out.println(seanceRepository.findAll());
         }
     }
 }
